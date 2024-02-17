@@ -5,11 +5,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:weather_app/screens/home_viewmodel.dart';
 import 'package:weather_app/screens/location_screen.dart';
 import 'package:weather_app/widgets/loader_view.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
+ final HomeViewModel viewModel = Get.put(HomeViewModel());
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +51,7 @@ class HomeView extends StatelessWidget {
   }
   AppBar appBar(){
     return AppBar(
-      title: Text(""),
+      title: Obx(() => Text(viewModel.location.value),),
       actions: [
         IconButton(onPressed: (){
           Get.to(()=>LocationView());
@@ -89,7 +91,7 @@ class HomeView extends StatelessWidget {
     );
   }
   Widget weatherImage(){
-    return CachedNetworkImage(imageUrl: '',height: 120,width: 120,imageBuilder: (context,imageProvider){
+    return CachedNetworkImage(imageUrl: 'hhtp://openweathermap.org/img/wn/${viewModel.weatherModel.value.weather?.first.icon}@4x.png',height: 120,width: 120,imageBuilder: (context,imageProvider){
       return Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
